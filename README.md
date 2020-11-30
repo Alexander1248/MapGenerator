@@ -1,6 +1,8 @@
 # MapGenerator2D
-Map generator based on Perlin noise
+Map generator based on Perlin noise.
+
 Currently there are 3 types of generated maps:
+
 1)Generating a map with temperature changes depending on the distance from the equator (the temperature is generated in the same way as on Earth).
 To activate it, enter the word "Sphere" in the worldType field in the generator.
 
