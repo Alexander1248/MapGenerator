@@ -1,17 +1,19 @@
 #pragma once
 #include <math.h>
 #include <string>
-#include "SFML/Graphics.hpp"
 #include "Encryption.h"
 #include "PerlinNoise.h"
 
 
 
 using namespace std;
-using namespace sf;
 
+struct Vec2 {
+	int x;
+	int y;
+};
 
-void ElisiumMapGen(float**& data, Vector2i mapSize, int maxHeight, string seed, string worldType, int maxT, int minT,float waterPercentage,int waterLevel, int mountianLevel,int kRivers,int riverLen,float riverRandomisationPercentage,float scale) {
+void WorldGen(float**& data, Vec2 mapSize, int maxHeight, string seed, string worldType, int maxT, int minT,float waterPercentage,int waterLevel, int mountianLevel,int kRivers,int riverLen,float riverRandomisationPercentage,float scale) {
 	//Number of noise generation cycles (affects speed)
 	const int octaves = 10;
 
