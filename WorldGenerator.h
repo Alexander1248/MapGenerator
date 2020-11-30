@@ -12,10 +12,10 @@ using namespace sf;
 
 
 void ElisiumMapGen(float**& data, Vector2i mapSize, int maxHeight, string seed, string worldType, int maxT, int minT,float waterPercentage,int waterLevel, int mountianLevel,int kRivers,int riverLen,float riverRandomisationPercentage,float scale) {
-	//Количество циклов генерации шума (влияет на скорость)
+	//Number of noise generation cycles (affects speed)
 	const int octaves = 10;
 
-	//Преобразование семени мира в приемлимое значение
+	// Converting the world seed to an acceptable value
 	char* seedHash = new char[32];
 	int len = seed.length();
 	char* inpSeed = new char[len];
@@ -24,12 +24,12 @@ void ElisiumMapGen(float**& data, Vector2i mapSize, int maxHeight, string seed, 
 	unsigned int sum = 0;
 	for (int i = 0; i < 32; i++) sum += ((seedHash[i] - 33) % 2) * pow(2, i);
 
-	//Инициализация массивов
+	// Initializing arrays
 	data = new float* [4];
 	for (int i = 0; i < 4; i++) data[i] = new float[mapSize.x * mapSize.y];
 	int* par = new int[mapSize.x * mapSize.y];
 
-	//Генерация карты высот
+	//Generating a height map
 	GenNoise(par, mapSize.x, mapSize.y, octaves, maxHeight, sum,scale);
 	for (int i = 0; i < mapSize.x * mapSize.y; i++) {
 		float dat = float(par[i]) / maxHeight;
@@ -38,7 +38,7 @@ void ElisiumMapGen(float**& data, Vector2i mapSize, int maxHeight, string seed, 
 	}
 
 
-	//Генерация рек
+	//Generation of rivers
 	srand(sum);
 	int kRiv = kRivers;
 	int* water = new int[kRiv];
@@ -97,7 +97,7 @@ void ElisiumMapGen(float**& data, Vector2i mapSize, int maxHeight, string seed, 
 	}
 
 
-	//Генерация температурной карты
+	//Generating a temperature map
 	float* par1 = new float[mapSize.x * mapSize.y];
 	if (worldType == "Plane") {
 		for (int i = 0; i < mapSize.x * mapSize.y; i++) {
@@ -132,11 +132,11 @@ void ElisiumMapGen(float**& data, Vector2i mapSize, int maxHeight, string seed, 
 	for (int i = 0; i < mapSize.x * mapSize.y; i++) data[2][i] = par1[i];
 
 
-	//Реверсивное преобразование семени мира в приемлимое значение
+	//Reverse conversion of the world seed to an acceptable value
 	sum = 0;
 	for (int i = 0; i < 32; i++) sum += ((seedHash[i] - 33) % 2) * pow(2, 31 - i);
 
-	//Генерация карты влажности
+	// Generating a humidity map
 	GenNoise(par, mapSize.x, mapSize.y, octaves, 1000, sum, scale);
 	if (worldType == "Plane") {
 		int coef = 10;
